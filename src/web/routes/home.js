@@ -9,7 +9,6 @@ import editarServico from '../models/editarAgendamento.js';
 const router = express.Router();
 
 
-
 router.get('/servicos', listarServicos);
 router.get('/financas', financas);
 router.post('/agendar', agendarServico);

@@ -30,7 +30,6 @@ const financas = async (req, res) => {
 
         return res.status(200).json(financeiro);
 
-
     } catch(error){
         console.error("Erro ao listar as informações do banco de dados:", error)
         res.status(500).send("Erro no servidor ao carregar as informações.")

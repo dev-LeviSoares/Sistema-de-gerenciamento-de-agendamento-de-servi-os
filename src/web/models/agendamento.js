@@ -17,6 +17,7 @@ const agendarServico = async (req, res) => {
                 (servico, veiculo, descricao, placa, cliente, telefone_cliente, valor, pagamento, data_entrada, prazo, situacao) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `
+
         //Evitar SQL Injection
 
         const values = [
@@ -24,7 +25,7 @@ const agendarServico = async (req, res) => {
             pagamento, data_entrada, prazo, situacao
         ];
 
-        const [result] = await pool.query(query, values);
+        await pool.query(query, values);
  
         res.status(201).json({
             message: "Serviço cadastrado com sucesso!",
