@@ -1,5 +1,4 @@
-import servicosModel from '../models/servicosModel.js';
-import ServicesModel from '../models/servicosModel.js'
+import ServicesModel from '../models/servicosModel.js';
 
 const listarServicos = async (req, res) => {
 
@@ -56,7 +55,7 @@ const editarAgendamento = async (req, res) => {
         
         const { id } = req.params;
 
-        const atualizado = await servicosModel.editarAgendamento(id, req.body);
+        const atualizado = await ServicesModel.editarAgendamento(id, req.body);
 
         if (!atualizado) {
             return res.status(400).json({ message: "Nenhum campo enviado para atualização." });

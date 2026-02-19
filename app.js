@@ -2,12 +2,13 @@
 import 'dotenv/config.js' // Importa e configura o dontenv
 import express from 'express';
 import pool from './db/db.js'; // Banco de dados
-import path from 'path' // Utilitário para trabalhar com caminhos de arquivo
+import path from 'path'; // Utilitário para trabalhar com caminhos de arquivo
 
 //Import de rotas
 
-import homeRoutes from './src/web/routes/home.js'
-
+import homeRoutes from './src/web/routes/homeRoutes.js';
+import servicesRoutes from './src/web/routes/servicesRoutes.js';
+import financeRoutes from './src/web/routes/financeRoutes.js';
 
 // Configurar __dirname em ES Modules
 import { fileURLToPath } from 'url';
@@ -29,10 +30,8 @@ app.use(express.json()) // Faz o parse do JSON enviado no body
 //Rotas de acesso a plataforma
 
 app.use('/', homeRoutes); //Rota principal
-
-// app.get('/', async (req, res) => {
-//     res.render('partials/header')
-// })
+app.use('/servicos', servicesRoutes);
+app.use('/financeiro', financeRoutes);
 
 
 try{

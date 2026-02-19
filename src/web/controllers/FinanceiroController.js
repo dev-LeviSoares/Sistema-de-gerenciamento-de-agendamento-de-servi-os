@@ -1,4 +1,4 @@
-import Finance from '../models/financeiro';
+import Finance from '../models/financeiro.js';
 
 const financeiro = async (req, res) => {
 
@@ -16,13 +16,13 @@ const financeiro = async (req, res) => {
 
         }));
 
-        return res.status(200).json(financeiro);
+        return res.status(200).json(financas);
 
     } catch (error) {
         console.error("Erro ao buscar informações:", error);
         res.status(500).send("Erro no servidor ao carregar informações.");
     }
     
-
-
 }
+
+export default { financeiro };
