@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import userModel from '../web/models/usuarioModel.js';
+import userModel from '../web/models/userModel.js';
 
 const registerUser = async ({ nome, email, senha, nome_estabelecimento, telefone, }) => {
     if(!nome || !email || !senha || !nome_estabelecimento) throw new Error('Digite as informações obrigatórias');

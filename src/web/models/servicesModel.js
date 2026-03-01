@@ -21,7 +21,7 @@ const listarServicos = async ( ) => {
                 data_entrada,
                 prazo,
                 situacao
-            FROM servicos_automotivos
+            FROM servicos
                 ORDER BY data_entrada ASC
         `
     );
@@ -38,7 +38,7 @@ const agendarServico = async (dados) => {
     } = dados;
 
     const query = `
-        INSERT INTO servicos_automotivos 
+        INSERT INTO servicos
             (servico, veiculo, descricao, placa, cliente, telefone_cliente, valor, pagamento, data_entrada, prazo, situacao) 
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
@@ -90,7 +90,7 @@ const editarAgendamento = async (id, dados) => {
     }
 
     const query = `
-        UPDATE servicos_automotivos
+        UPDATE servicos
         SET ${fields.join(", ")}
         WHERE id = ?
     `;
