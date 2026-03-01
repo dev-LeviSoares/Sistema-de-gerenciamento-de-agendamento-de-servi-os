@@ -8,6 +8,10 @@ import path from 'path'; // Utilitário para trabalhar com caminhos de arquivo
 
 import auth from './src/web/middleware/authenticator.js'; // Libera rotas para usuarios clientes(autorizados)
 
+// Jobs
+
+import './src/jobs/cleanUpJob.js'; // O cron se registra automaticamento quando importado, ele já está executando
+
 //Import de rotas
 
 import homeRoutes from './src/web/routes/homeRoutes.js';

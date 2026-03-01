@@ -1,4 +1,4 @@
-import ServicesModel from '../models/servicosModel.js';
+import ServicesModel from '../models/servicesModel.js';
 
 const listarServicos = async (req, res) => {
 

@@ -1,5 +1,5 @@
 import express from 'express';
-import servicesController from '../controllers/ServicosController.js';
+import servicesController from '../controllers/ServicesController.js';
 import { resolveMx } from 'dns';
 
 const router = express.Router();

@@ -102,4 +102,14 @@ const editarAgendamento = async (id, dados) => {
     return true;
 }
 
-export default { listarServicos, agendarServico, editarAgendamento };
+const cleanup = async () => {
+  const query = `
+    DELETE FROM servicos 
+    WHERE situacao = 'Concluido' 
+    AND data_conclusao < DATE_SUB(NOW(), INTERVAL 45 DAY)
+  `
+  await pool.query(query)
+  return true;
+}
+
+export default { listarServicos, agendarServico, editarAgendamento, cleanup };
