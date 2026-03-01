@@ -2,7 +2,7 @@ import pool from '../../../db/db.js';
 
 //Rota get
 
-const listarServicos = async (req, res) => {
+const listarServicos = async ( ) => {
         
 //Use sempre aspas inversas nas queries
         
@@ -40,7 +40,7 @@ const agendarServico = async (dados) => {
     const query = `
         INSERT INTO servicos_automotivos 
             (servico, veiculo, descricao, placa, cliente, telefone_cliente, valor, pagamento, data_entrada, prazo, situacao) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
 
     //Evitar SQL Injection

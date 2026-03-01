@@ -3,7 +3,6 @@ import ServicesModel from '../models/servicosModel.js';
 const listarServicos = async (req, res) => {
 
     try {
-
         // Chama o model para buscar os dados do banco
         const rows = await ServicesModel.listarServicos();
 

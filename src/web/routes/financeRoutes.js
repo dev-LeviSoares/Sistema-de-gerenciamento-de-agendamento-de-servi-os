@@ -1,15 +1,8 @@
 import express from 'express';
-
-import financesController from '../controllers/FinanceiroController.js';
+import financesController from '../controllers/FinanceController.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-
-    res.render("")
-
-});
-
-router.get('/dashboard', financesController.financeiro);
+router.get('/dashboard', financesController.cashFlow);
 
 export default router;

@@ -4,11 +4,16 @@ import express from 'express';
 import pool from './db/db.js'; // Banco de dados
 import path from 'path'; // Utilitário para trabalhar com caminhos de arquivo
 
+// Middlewares
+
+import auth from './src/web/middleware/authenticator.js'; // Libera rotas para usuarios clientes(autorizados)
+
 //Import de rotas
 
 import homeRoutes from './src/web/routes/homeRoutes.js';
 import servicesRoutes from './src/web/routes/servicesRoutes.js';
 import financeRoutes from './src/web/routes/financeRoutes.js';
+import userRoutes from './src/web/routes/userRoutes.js';
 
 // Configurar __dirname em ES Modules
 import { fileURLToPath } from 'url';
@@ -29,10 +34,10 @@ app.use(express.json()) // Faz o parse do JSON enviado no body
 
 //Rotas de acesso a plataforma
 
-app.use('/', homeRoutes); //Rota principal
-app.use('/servicos', servicesRoutes);
-app.use('/financeiro', financeRoutes);
-
+app.use('/', homeRoutes); // Pagina principal
+app.use('/login', userRoutes);
+app.use('/servicos', auth, servicesRoutes);
+app.use('/financeiro', auth, financeRoutes);
 
 try{
     const PORT = process.env.PORT || 3000
