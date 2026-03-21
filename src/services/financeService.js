@@ -7,8 +7,8 @@ const finance = async () => {
         servico: row.servico,
         valor: row.valor,
         data_entrada: row.data_entrada,
-        pagamento: row.pagamento || 'Sem esse dado',
-        prazo: row.prazo || 'Sem esse dado'
+        pagamento: row.pagamento ?? 'Sem esse dado',
+        prazo: row.prazo ?? 'Sem esse dado'
     }));
 
     return { accounting };

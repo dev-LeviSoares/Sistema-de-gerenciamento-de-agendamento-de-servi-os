@@ -21,4 +21,14 @@ const login = async (req, res) => {
     }
 }
 
-export default { register, login }
+const forgotPassword = async (req, res) => {
+    try {
+        const userForgot = await userService.forgotPasswordUser(req.body)
+
+        return res.status(200).json({message: "Seu token de recuperacao de senha", userForgot: userForgot.token})
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+export default { register, login, forgotPassword }

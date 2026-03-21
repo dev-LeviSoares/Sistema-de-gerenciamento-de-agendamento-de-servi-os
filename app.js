@@ -1,12 +1,11 @@
 //Import utilitários
 import 'dotenv/config.js' // Importa e configura o dontenv
 import express from 'express';
-import pool from './db/db.js'; // Banco de dados
 import path from 'path'; // Utilitário para trabalhar com caminhos de arquivo
 
 // Middlewares
 
-import auth from './src/web/middleware/authenticator.js'; // Libera rotas para usuarios clientes(autorizados)
+import auth from './src/web/middleware/auth.js'; // Libera rotas para usuarios clientes(autorizados)
 
 // Jobs
 
@@ -37,7 +36,6 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json()) // Faz o parse do JSON enviado no body
 
 //Rotas de acesso a plataforma
-
 app.use('/', homeRoutes); // Pagina principal
 app.use('/login', userRoutes);
 app.use('/servicos', auth, servicesRoutes);
