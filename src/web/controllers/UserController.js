@@ -21,14 +21,25 @@ const login = async (req, res) => {
     }
 }
 
-const forgotPassword = async (req, res) => {
+const forgotPasswordToken = async (req, res) => {
     try {
         const userForgot = await userService.forgotPasswordUser(req.body)
 
-        return res.status(200).json({message: "Seu token de recuperacao de senha", userForgot: userForgot.token})
+        return res.status(200).json({message: "Seu link de recuperacao", link: `http://localhost:3000/login/recuperar-senha?token=${userForgot.token}`});
     } catch (error) {
         res.status(400).json({error: error.message})
     }
 }
 
-export default { register, login, forgotPassword }
+const changeForgottenPassWord = async(req, res) => {
+    try {
+        await userService.newPassword({token: req.query.token, password: req.body.password});
+
+        return res.status(200).json({message: "Senha alterada com sucesso!"})
+
+    } catch (error) {
+        res.status(400).json({error: error.message})
+    }
+}
+
+export default { register, login, forgotPasswordToken, changeForgottenPassWord }

@@ -15,7 +15,9 @@ const registerUser = async ({ nome, email, senha, nome_estabelecimento, telefone
     return userModel.create({ nome, email, senha: hashedPassword, nome_estabelecimento, telefone });
 }
 
-const loginUser = async ({ email, senha}) => {
+const loginUser = async (dados) => {
+    const { email, senha } = dados;
+
     if(!email || !senha) throw new Error('Digite os dados corretos');
     
     const user = await userModel.findByEmail(email); // Consegue acessar todas as colunas da tabela dessa funcao
@@ -46,8 +48,26 @@ const forgotPasswordUser = async ({email}) => {
     const expires = new Date(Date.now() + 60 * 60 * 1000);
     console.log(expires)
 
-    return await userModel.createForgotToken({userId, token, expires});
-
+    const tokenPassword = await userModel.createForgotToken({userId, token, expires});
+    
+    return { id: userId, token: tokenPassword.token } // Acessa o a chave token
 }
 
-export default { registerUser, loginUser, forgotPasswordUser};
+const newPassword = async (recovery) => {
+    const { token, password } = recovery;
+    if(!token) throw new Error('Token inválido');
+
+    const tokenPassword = await userModel.authTokenPassword(token);
+
+    if(!tokenPassword) throw new Error('Token inválido');
+    if(!tokenPassword[0].reset_token) throw new Error('Token inválido');
+    if(tokenPassword[0].reset_token_expires < new Date(Date.now())) throw new Error('Token inválido');
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+
+    await userModel.resetPassword({ token, password: hashedPassword });
+
+    return true;
+}
+
+export default { registerUser, loginUser, forgotPasswordUser, newPassword};

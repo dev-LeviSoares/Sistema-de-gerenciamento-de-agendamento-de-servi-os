@@ -29,7 +29,28 @@ const createForgotToken = async (recovery) => {
   
   await pool.query(query, values);
 
-  return { token: token }
+  return { token }
 }
 
-export default { create, findByEmail, createForgotToken };
+const authTokenPassword = async (token) => {
+  const rows = await pool.query(
+    'SELECT * FROM usuarios WHERE reset_token = ?',
+    [token]
+  );
+  return rows[0];
+}
+
+const resetPassword = async (data) => {
+  const { token, password } = data
+
+  const query = `
+    UPDATE usuarios SET senha = ?, reset_token = NULL, reset_token_expires = NULL WHERE reset_token = ? 
+  `
+  const values = [password, token];
+
+  await pool.query(query, values);
+
+  return true;
+}
+
+export default { create, findByEmail, authTokenPassword, createForgotToken, resetPassword};
