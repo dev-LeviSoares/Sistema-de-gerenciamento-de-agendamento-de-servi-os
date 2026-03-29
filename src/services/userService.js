@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
+import sendEmail from '../infra/mail/sendEmail.js';
 import userModel from '../web/models/userModel.js';
 
 const registerUser = async ({ nome, email, senha, nome_estabelecimento, telefone, }) => {
@@ -36,6 +37,7 @@ const loginUser = async (dados) => {
 }
 
 const forgotPasswordUser = async ({email}) => {
+ 
     if(!email) throw new Error('Digite o email');
 
     const user = await userModel.findByEmail(email);
@@ -44,23 +46,26 @@ const forgotPasswordUser = async ({email}) => {
     
     const userId = user.id;
     const token = crypto.randomBytes(32).toString('hex');
-    console.log(token)
+    // console.log(token)
     const expires = new Date(Date.now() + 60 * 60 * 1000);
-    console.log(expires)
-
+    // console.log(expires)
     const tokenPassword = await userModel.createForgotToken({userId, token, expires});
+
+    const result = await sendEmail.sendRecoveryLink(email, tokenPassword.token);
+
     
     return { id: userId, token: tokenPassword.token } // Acessa o a chave token
 }
 
 const newPassword = async (recovery) => {
     const { token, password } = recovery;
+
     if(!token) throw new Error('Token inválido');
 
     const tokenPassword = await userModel.authTokenPassword(token);
 
-    if(!tokenPassword) throw new Error('Token inválido');
-    if(!tokenPassword[0].reset_token) throw new Error('Token inválido');
+    if(!tokenPassword) throw new Error('Token inválido1');
+    if(!tokenPassword[0].reset_token) throw new Error('Token inválido2');
     if(tokenPassword[0].reset_token_expires < new Date(Date.now())) throw new Error('Token inválido');
 
     const hashedPassword = await bcrypt.hash(password, 10)

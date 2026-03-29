@@ -23,9 +23,11 @@ const login = async (req, res) => {
 
 const forgotPasswordToken = async (req, res) => {
     try {
-        const userForgot = await userService.forgotPasswordUser(req.body)
 
-        return res.status(200).json({message: "Seu link de recuperacao", link: `http://localhost:3000/login/recuperar-senha?token=${userForgot.token}`});
+       await userService.forgotPasswordUser(req.body)
+        
+        return res.status(200).json({message: "Email de recuperação de senha enviado"});
+
     } catch (error) {
         res.status(400).json({error: error.message})
     }

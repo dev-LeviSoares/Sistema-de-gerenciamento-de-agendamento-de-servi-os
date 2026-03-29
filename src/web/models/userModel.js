@@ -33,11 +33,13 @@ const createForgotToken = async (recovery) => {
 }
 
 const authTokenPassword = async (token) => {
-  const rows = await pool.query(
+
+  const [rows] = await pool.query(
     'SELECT * FROM usuarios WHERE reset_token = ?',
     [token]
   );
-  return rows[0];
+
+  return rows;
 }
 
 const resetPassword = async (data) => {
