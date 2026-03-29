@@ -45,7 +45,7 @@ try{
     const PORT = process.env.PORT || 3000
     app.listen( PORT, () => console.log('Servidor rodando na porta: ', PORT))
 } catch(error){
-    console.error('Erro ao inicializar o aplicativo:', error)
+    console.error('Erro ao inicializar o sistema:', error)
     process.exit(1)
 }
 
