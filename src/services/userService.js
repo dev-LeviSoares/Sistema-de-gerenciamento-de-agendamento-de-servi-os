@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
-import sendEmail from '../infra/mail/sendEmail.js';
+import sendEmail from '../infra/mail/sendRecoveryEmail.js';
 import userModel from '../web/models/userModel.js';
 
 const registerUser = async ({ nome, email, senha, nome_estabelecimento, telefone, }) => {
@@ -46,12 +46,12 @@ const forgotPasswordUser = async ({email}) => {
     
     const userId = user.id;
     const token = crypto.randomBytes(32).toString('hex');
-    // console.log(token)
+
     const expires = new Date(Date.now() + 60 * 60 * 1000);
-    // console.log(expires)
+
     const tokenPassword = await userModel.createForgotToken({userId, token, expires});
 
-    const result = await sendEmail.sendRecoveryLink(email, tokenPassword.token);
+    await sendEmail.sendRecoveryLink(email, tokenPassword.token);
 
     
     return { id: userId, token: tokenPassword.token } // Acessa o a chave token

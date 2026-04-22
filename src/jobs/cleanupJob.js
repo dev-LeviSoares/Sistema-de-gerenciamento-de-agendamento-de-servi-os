@@ -2,7 +2,7 @@ import servicesModel from '../web/models/servicesModel.js';
 import cron from 'node-cron';
 // 0 6 * * 1
 cron.schedule('0 6 * * 1', async() => {
-    console.log('Cron iniciado — verificando existe servicos com mais de 30 dias ...');
+    console.log('Cron iniciado — verificando existe servicos com mais de 45 dias ...');
     await servicesModel.cleanup();
     console.log('Cron finalizado — verificacao de servicos concluida...');
 });

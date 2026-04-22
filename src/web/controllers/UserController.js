@@ -37,11 +37,25 @@ const changeForgottenPassWord = async(req, res) => {
     try {
         await userService.newPassword({token: req.query.token, password: req.body.password});
 
-        return res.status(200).json({message: "Senha alterada com sucesso!"})
+        return res.status(200).json({message: "Senha alterada com sucesso!"});
 
     } catch (error) {
-        res.status(400).json({error: error.message})
+        res.status(400).json({error: error.message});
     }
 }
 
-export default { register, login, forgotPasswordToken, changeForgottenPassWord }
+const logout = (req, res) => {
+    try {
+        res.clearCookie("jwt", {
+            httpOnly: true,
+            // secure: true, O cookie só será enviado em conexões HTTPS.
+            sameSite: "strict"
+        });
+        console.log("Usuario deslogado");
+        return res.redirect("/");
+    } catch (error) {
+        res.status(400).json({ error: error.message});
+    }
+}
+
+export default { register, login, forgotPasswordToken, changeForgottenPassWord, logout}

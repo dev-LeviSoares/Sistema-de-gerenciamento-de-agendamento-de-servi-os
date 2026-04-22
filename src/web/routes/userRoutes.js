@@ -6,6 +6,7 @@ const router = express.Router();
 router.post('/cadastrar', userController.register);
 router.post('/login', userController.login);
 router.post('/recuperar-senha', userController.forgotPasswordToken);
-router.post('/resetar-senha', userController.changeForgottenPassWord)
+router.post('/resetar-senha', userController.changeForgottenPassWord);
+router.post('/logout', userController.logout);
 
 export default router;
