@@ -2,10 +2,10 @@ import pool from '../../../db/db.js';
 
 //Rota get
 
-const listarServicos = async ( ) => {
-        
+const listarServicos = async (user_id) => {
 //Use sempre aspas inversas nas queries
-        
+    const id = user_id;
+
     const [rows] = await pool.query(
         `
             SELECT
@@ -21,16 +21,17 @@ const listarServicos = async ( ) => {
                 data_entrada,
                 prazo,
                 situacao
-            FROM servicos
-                ORDER BY data_entrada ASC
-        `
+            FROM servicos  WHERE user_id = ?
+            ORDER BY data_entrada ASC
+        `,
+        [id]
     );
     
     return rows;
 }
 
-const agendarServico = async (dados) => {
-
+const agendarServico = async (id, dados) => {
+    const user_id = id;
     const { 
         servico, veiculo, descricao, placa,
         cliente, telefone_cliente, valor, 
@@ -39,14 +40,14 @@ const agendarServico = async (dados) => {
 
     const query = `
         INSERT INTO servicos
-            (servico, veiculo, descricao, placa, cliente, telefone_cliente, valor, pagamento, data_entrada, prazo, situacao) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            (user_id, servico, veiculo, descricao, placa, cliente, telefone_cliente, valor, pagamento, data_entrada, prazo, situacao) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
     `;
 
     //Evitar SQL Injection
 
     const values = [
-        servico, veiculo, descricao, placa, cliente, telefone_cliente, valor,
+        user_id, servico, veiculo, descricao, placa, cliente, telefone_cliente, valor,
         pagamento, data_entrada, prazo, situacao
     ];
 

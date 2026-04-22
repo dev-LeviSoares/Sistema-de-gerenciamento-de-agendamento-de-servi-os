@@ -1,10 +1,11 @@
 import ServicesModel from '../models/servicesModel.js';
 
 const listarServicos = async (req, res) => {
-
+    
     try {
+        const user_Id = req.user.id;
         // Chama o model para buscar os dados do banco
-        const rows = await ServicesModel.listarServicos();
+        const rows = await ServicesModel.listarServicos(user_Id);
 
         // Formata os dados antes de enviar para o cliente
         
@@ -36,7 +37,7 @@ const agendarServico = async (req, res) => {
 
     try {
         
-        await ServicesModel.agendarServico(req.body);
+        await ServicesModel.agendarServico(req.user.id, req.body);
 
         return res.status(201).json({
             message: "Serviço cadastrado com sucesso! "
